@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>ジャンケンゲーム</title>
+		<style>
+			img{width:100px;height:100px;}
+		</style>
+	</head>
+
+
+	<body>
+		<p>
+			<img src="gu.jpg" alt="グー" onclick='janken("グー")' id="gu">
+			<img src="chi.jpg" alt="チョキ" onclick='janken("チョキ")' id="choki">
+			<img src="pa.jpg" alt="パー" onclick='janken("パー")' id="pa">
+		</p>
+		<p id="output1">10秒以内に10点を目指そう  ジャンケン。。。。</p>
+
+		
+		<script>
+			// カウントダウンする秒数
+  var sec = 10;
+ 
+ 
+ var dt = new Date();
+ console.log("Start: ", dt);
+ 
+ var endDt = new Date(dt.getTime() + sec * 1000);
+ console.log("End : ", endDt);
+
+ // 1秒おきにカウントダウン
+ var cnt = sec;
+ var id = setInterval(function(){
+   cnt--;
+   console.log(cnt);
+   // 現在日時と終了日時を比較
+   dt = new Date();
+   if(dt.getTime() >= endDt.getTime()){
+	 clearInterval(id);
+	 console.log("Finish!");
+   }
+ }, 1000);
+
+
+
+			const OUTPUT1 = document.getElementById("output1");
+
+			//得点
+			let point = 0;
+			let judge;
+			let kakutei=0;
+			function janken(player) {
+				//PCの手
+				let pc = Math.floor(Math.random() * 3);
+				if (pc === 0) { pc = "グー"; }
+				if (pc === 1) { pc = "チョキ"; }
+				if (pc === 2) { pc = "パー"; }
+
+				
+if(cnt===0){kakutei=point;
+}
+else {
+				//判定
+				if (player === "グー") {
+					if (pc === "グー") { judge = "あいこ"; }
+					if (pc === "チョキ") { judge = "勝ち"; point++; }
+					if (pc === "パー") { judge = "負け"; point--; }
+				}
+
+				if (player === "チョキ") {
+					if (pc === "グー") { judge = "負け"; point--; }
+					if (pc === "チョキ") { judge = "あいこ"; }
+					if (pc === "パー") { judge = "勝ち"; point++; }
+				}
+
+				if (player === "パー") {
+					if (pc === "グー") { judge = "勝ち"; point++; }
+					if (pc === "チョキ") { judge = "負け"; point--; }
+					if (pc === "パー") { judge = "あいこ"; }
+				}
+
+				if(pc==="グー"){pc='<img src="gu.jpg">';}
+				if(pc==="チョキ"){pc='<img src="chi.jpg">';}
+				if(pc==="パー"){pc='<img src="pa.jpg">';}
+}
+				
+				//ページに表示
+				OUTPUT1.innerHTML
+					= "<p>PCは" + pc + "</p>" + "<p>あなたは" + player + "なので" + judge
+					+ "。得点" + point + "点です</p>"+"残り"+cnt+"秒";
+				
+
+
+					if(cnt==0){OUTPUT1.innerHTML
+					="終了！！  "+kakutei+"点です"
+
+					}
+			}
+		</script>
+
+	</body>
+
+</html>
